@@ -1,0 +1,117 @@
+using System;
+
+namespace Betting
+{
+    class Program
+    {
+        // Function to make a range
+        // Giving a start, end and the increment
+        static List<double> RangeStep(double start, double end, double increment = 1)
+        {
+            List<double> list = new List<double>();
+
+            double i = start;
+            while (i <= end)
+            {
+                list.Add(Math.Round(i, 3));
+                i += increment;
+            }
+
+            return list;
+        }
+
+        static void Main(string[] args)
+        {
+            List<double> odd1 = new List<double>();
+            List<double> odd2 = new List<double>();
+            List<double> bet1 = new List<double>();
+            List<double> bet2 = new List<double>();
+            //List<double> amount1 = new List<double>();
+            //List<double> amount2 = new List<double>();
+            List<double> odd1r = new List<double>();
+            List<double> odd2r = new List<double>();
+            double maxMoney = 100;
+            double minMoney = 1;
+            double minOdd = 1.0;
+            double maxOdd = 5;
+
+            bet1 = RangeStep(1, 100, 0.1);
+            bet2 = RangeStep(1, 100, 0.1);
+
+            odd1 = RangeStep(10,11,0.01);
+            odd2 = RangeStep(1,1.26,0.01);
+
+            Console.WriteLine("Length of bets {0}", bet1.Count);
+            Console.WriteLine("Length of odd1 {0}", odd1.Count);
+
+
+            Random rnd = new Random();
+            int lenthOdd1 = 100;
+
+            for (int i = 0; i < lenthOdd1; i++)
+            {
+                int index = rnd.Next(odd1.Count);
+               // Console.Write(odd1[index] + " ");
+                odd1r.Add(odd1[index]);
+            }
+            for(int i = 0; i < lenthOdd1; i++)
+            {
+                int ind = rnd.Next(odd2.Count);
+                odd2r.Add(odd2[ind]);
+            }
+
+            // the good odds
+            List<double> goodOdd1 = new List<double>();
+            List<double> goodOdd2 = new List<double>();
+            List<double> maxprofit = new List<double>();
+            List<double> minprofit = new List<double>();
+
+            List<double> goodBet1 = new List<double>();
+            List<double> goodBet2 = new List<double>();
+
+
+
+            double amount1, amount2, total, p1, p2;
+
+            // Go through both odds
+
+            #region Works
+            int counter = 0;
+            for (int i = 0; i < odd1r.Count; i++)
+            {
+                for (int j = 0; j < odd2r.Count; j++)
+                {
+                    double a, b, p, q;
+                    a = Math.Round(odd1r[i] * bet1[i], 2);
+                    b = Math.Round(odd2r[j] * bet2[j], 2);
+                    double t = bet1[i] + bet2[j];
+                    p = a - t;
+                    q = b - t;
+                    if (p > 0 && q > 0)
+                    {
+                        Console.WriteLine("Odds:      {0}  -  {1} ", odd1r[i], odd2r[j] );
+                        Console.WriteLine("Amounts:   ${0} -  ${1} ", a, b);
+                        Console.WriteLine("Profits:   ${0} -  ${1}", Math.Round(p, 2), Math.Round(q, 2));
+                        Console.WriteLine();
+                        counter++;
+                    }
+
+                }
+
+
+            }
+            Console.WriteLine();
+            Console.WriteLine("{0} Excellent Betts!!", counter);
+
+            #endregion
+
+
+
+
+
+
+        }
+    }
+}
+
+
